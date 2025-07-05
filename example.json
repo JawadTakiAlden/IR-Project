@@ -1,0 +1,57 @@
+[
+  {
+    "doc_id": "cranfield:367",
+    "text": "control system and analysis and design via the second method of\nlyapunov .\nthe/second method/of lyapunov is the most general approach currently in\nthe theory of stability of dynamic systems . after a rigorous exposition\n of the fundamental concepts of this theory, applications are made to/a/\nstability of linear stationary, linear nonslationary, and nonlinear\nsystems,./b/estimation of transient behavior,./c/control-system\noptimization,./d/design of relay servos . the discussion is essentially\nself-contained, with emphasis on the thorough development of the\nprincipal ideas and mathematical tools . only systems governed by\ndifferential equations are treated here . systems governed by difference\nequations are the subject of a companion paper .",
+    "score": 0.34770585971342477
+  },
+  {
+    "doc_id": "cranfield:1032",
+    "text": "on the conservativeness of various distributed force systems .\nthe necessity of determining the conservativeness of force systems in\ninstability problems is discussed in reference 1 .  it is shown that,\nwhereas kinetic methods are generally applicable for the determination\nof instability loads, the statical methods usually employed are valid\nonly for conservative and nongyroscopic systems .  small changes in\nthe character of the loading could make an otherwise conservative\nsystem nonconservative and cause a large change in the magnitude of the\nbuckling load .  the buckling load of the cantilever column example\nin reference 1 is, for tangential end loading, eight times that for\nconservative, constant directional loading .",
+    "score": 0.32323107012280555
+  },
+  {
+    "doc_id": "cranfield:1102",
+    "text": "a five-stage solid fuel sounding rocket system .\na five-stage solid-fuel sounding-rocket system which can boost a payload\n of 25 pounds to an altitude of 525 nautical miles and that of 100\npounds to 300 nautical miles is described . data obtained from a typical\n flight test of the system are discussed .",
+    "score": 0.30206414057018094
+  },
+  {
+    "doc_id": "cranfield:62",
+    "text": "similar solutions for the compressible laminar boundary\nlayer with heat transfer and pressure gradient .\n  stewartson's transformation is applied to the laminar compressible\nboundary-layer equations and the\nrequirement of similarity is introduced,\nresulting in a set of ordinary nonlinear differential equations\npreviously quoted by stewartson, but unsolved .  the requirements of the\nsystem are ..  prandtl number of 1.0, linear viscosity-temperature\nrelation across the boundary layer, an\nisothermal surface, and the particular\ndistributions of free-stream velocity\nconsistent with similar solutions .\nthis system admits axial pressure\ngradients of arbitrary magnitude, heat\nflux normal to the surface, and arbitrary mach numbers .\n  the system of differential equations is transformed to an integral\nsystem, with the velocity ratio as\nthe independent variable .  for this\nsystem, solutions are found for pressure gradients varying from that\ncausing separation to the infinitely favorable gradient and for wall\ntemperatures from absolute zero to twice the free-stream stagnation\ntemperature .  some solutions for separated flows are also presented .\n  for favorable pressure gradients, the solutions are unique .  for\nadverse pressure gradients, where the solutions are not unique, two\nsolutions of the infinite family of possible solutions are identified as\nessentially viscid at the outer edge of the boundary layer and the\nremainder essentially inviscid .  for\nthe case of favorable pressure gradients\nwith heated walls, the velocity within\na portion of the boundary layer is\nshown to exceed the local external velocity .\nthe variation of a reynolds\nanalogy parameter, which indicates the ratio of skin friction to heat\ntransfer, is from zero to 7.4 for a surface of temperature twice the\nfree-stream stagnation temperature, and from zero to 2.8 for a surface\nheld at absolute zero where the value 2 applies to a flat plate .",
+    "score": 0.2658668557945787
+  },
+  {
+    "doc_id": "cranfield:368",
+    "text": "some problems of polar missile control .\n  a polar-controlled missile is one in which manoeuvre\nis carried out by rotations about roll and pitch axes,\nthat is, in the manner of a conventional aeroplane .  this\npaper discusses some problems in the application of this\nform of control to homing missiles .\n  in comparison with the alternative cartesian\nconfiguration, this method presents some special design\nproblems .  in the former case, it is often possible to\nresolve the motion into two planes and consider the\npitch and yaw control systems as independent\ntwo-dimensional problems .  this simplification is not\npossible in the case of polar control and it is usually\nnecessary to consider the whole three-dimensional\nsystem .  the equations of motion which result are, in\ngeneral, not susceptible to analysis .  because of this,\nthe design of control systems requires extensive use of\nsimulators .",
+    "score": 0.24588062201252678
+  }
+]
+
+
+
+[
+    {
+      "doc_id": "cranfield:368",
+      "text": "some problems of polar missile control .\n  a polar-controlled missile is one in which manoeuvre\nis carried out by rotations about roll and pitch axes,\nthat is, in the manner of a conventional aeroplane .  this\npaper discusses some problems in the application of this\nform of control to homing missiles .\n  in comparison with the alternative cartesian\nconfiguration, this method presents some special design\nproblems .  in the former case, it is often possible to\nresolve the motion into two planes and consider the\npitch and yaw control systems as independent\ntwo-dimensional problems .  this simplification is not\npossible in the case of polar control and it is usually\nnecessary to consider the whole three-dimensional\nsystem .  the equations of motion which result are, in\ngeneral, not susceptible to analysis .  because of this,\nthe design of control systems requires extensive use of\nsimulators .",
+      "score": 0.9003490538839951
+    },
+    {
+      "doc_id": "cranfield:281",
+      "text": "higher order approximations for relaxation oscillations .\nthe problem of solving asymptotic developments for all quantities\ninvolved in relaxation oscillations has been solved by haag .  this\npaper indicates how one can carry out such developments in a case\nwhich is simple enough to be treated explicitly .",
+      "score": 0.8845479088212316
+    },
+    {
+      "doc_id": "cranfield:367",
+      "text": "control system and analysis and design via the second method of\nlyapunov .\nthe/second method/of lyapunov is the most general approach currently in\nthe theory of stability of dynamic systems . after a rigorous exposition\n of the fundamental concepts of this theory, applications are made to/a/\nstability of linear stationary, linear nonslationary, and nonlinear\nsystems,./b/estimation of transient behavior,./c/control-system\noptimization,./d/design of relay servos . the discussion is essentially\nself-contained, with emphasis on the thorough development of the\nprincipal ideas and mathematical tools . only systems governed by\ndifferential equations are treated here . systems governed by difference\nequations are the subject of a companion paper .",
+      "score": 0.8829420404623164
+    },
+    {
+      "doc_id": "cranfield:67",
+      "text": "dynamic stability of vehicles traversing ascending\nor descending paths through the atmosphere .\n  an analysis is given of the oscillatory motions of vehicles which\ntraverse ascending and descending paths through the atmosphere at high\nspeed .  the specific case of a skip path is examined in detail, and\nthis leads to a form of solution for the oscillatory motion which should\nrecur over any trajectory .  the distinguishing feature of this form is\nthe appearance of the bessel rather than the trigonometric function as\nthe characteristic mode of oscillation .",
+      "score": 0.8641635720693306
+    },
+    {
+      "doc_id": "cranfield:92",
+      "text": "the analysis of redundant structures by the use of\nhigh-speed digital computers .\n  large-scale redundant structure analyses are currently\nfeasible by the use of modern high-speed digital computers .\nthis capability opportunely meets the urgent need to solve\ncomplex problems which otherwise would be hopelessly beyond\nthe capacity of the hand desk computer .  however, the difficulties\nhave now shifted from tedious hand computations to the problems\nof adequately representing the structure by a model and\nof the peculiarities of irregular geometrical configurations .\n  a wide scope of problem types can be handled by a generalized\nprogram approach .  matrix formulation is used for the organization\nof input data and for handling data transfer in the large\ncomplex of subroutines, including the formation of equilibrium\nand continuity conditions to the final loads and deflections .\nsimultaneous treatment of thermal expansions and plasticity\nis included .\n  the use of minimum-size redundant systems is emphasized,\nstarting from the philosophy of cutting members to provide a\nstatically determinate structure .  improved numerical accuracy\nand problem size capacity is gained for a given computer .\nexamples are discussed ranging from simple plane-load diffusion\nproblems to pressurized fuselage cutouts and complex\nwing-fuselage-shell intersection-type problems .",
+      "score": 0.8636185410582188
+    }
+  ]

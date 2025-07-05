@@ -1,5 +1,5 @@
 from sqlalchemy import Column, String, Text
-from database import Base  # استيراد Base الموحد
+from database import Base 
 
 class Document(Base):
     __tablename__ = 'documents'
