@@ -4,6 +4,7 @@ import os
 from sklearn.metrics.pairwise import cosine_similarity
 from gensim.models import Word2Vec
 from services.processor import TextProcessor
+from rank_bm25 import BM25Okapi
 
 class SearchService:
     def __init__(self):
@@ -38,6 +39,48 @@ class SearchService:
         if not os.path.exists(path):
             raise ValueError(f"Inverted index not found for dataset '{dataset_name}'")
         return joblib.load(path)
+    
+    def load_bm25_assets(self, dataset_name: str):
+        base_path = "vector_store_bm25"
+        try:
+            bm25: BM25Okapi = joblib.load(os.path.join(base_path, f"{dataset_name}_bm25_model.joblib"))
+            doc_ids = joblib.load(os.path.join(base_path, f"{dataset_name}_doc_ids.joblib"))
+            doc_texts = joblib.load(os.path.join(base_path, f"{dataset_name}_doc_texts.joblib"))
+        except FileNotFoundError as e:
+            raise ValueError("BM25 joblib files not found.") from e
+
+        return bm25, doc_ids, doc_texts    
+
+    def search_bm25(self, query: str, dataset_name: str, top_k=5, with_index=False):
+        bm25, doc_ids, doc_texts = self.load_bm25_assets(dataset_name)
+        tokens = self.processor.normalize(query)
+
+        if with_index:
+            # Optional: use inverted index to filter docs
+            inverted_index = self.load_inverted_index(dataset_name)
+            matched_ids = set()
+            for token in tokens:
+                matched_ids.update(inverted_index.get(token, []))
+
+            filtered_data = [(i, doc_id, text)
+                             for i, (doc_id, text) in enumerate(zip(doc_ids, doc_texts))
+                             if doc_id in matched_ids]
+
+            if not filtered_data:
+                return []
+
+            indices, filtered_ids, filtered_texts = zip(*filtered_data)
+            scores = bm25.get_batch_scores(tokens, list(indices))
+            doc_ids, doc_texts = list(filtered_ids), list(filtered_texts)
+        else:
+            scores = bm25.get_scores(tokens)
+
+        top_indices = sorted(range(len(scores)), key=lambda i: scores[i], reverse=True)[:top_k]
+
+        return [
+            {"doc_id": doc_ids[i], "text": doc_texts[i], "score": float(scores[i])}
+            for i in top_indices
+        ]
 
     def filter_documents_by_inverted_index(self, query: str, dataset_name: str, doc_ids, doc_texts, matrix):
         inverted_index = self.load_inverted_index(dataset_name)
@@ -146,5 +189,7 @@ class SearchService:
             return self.search_word2vec(query, dataset_name, top_k, with_index)
         elif algorithm == "hybrid":
             return self.search_hybrid(query, dataset_name, top_k, alpha=0.5, with_index=with_index)
+        elif algorithm == "bm25":
+            return self.search_bm25(query, dataset_name, top_k, with_index)
         else:
             raise ValueError(f"Unknown algorithm: {algorithm}")
