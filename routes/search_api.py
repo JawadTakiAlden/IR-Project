@@ -8,7 +8,7 @@ router = APIRouter()
 
 search_service = SearchService()
 
-@router.get("/search")
+@router.post("/search")
 def search(
     query: str = Query(..., description="Search query text"),
     algorithm: str = Query("vsm", regex="^(vsm|word2vec|hybrid)$", description="Search algorithm to use"),
