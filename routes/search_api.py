@@ -11,7 +11,7 @@ search_service = SearchService()
 @router.post("/search")
 def search(
     query: str = Query(..., description="Search query text"),
-    algorithm: str = Query("vsm", regex="^(vsm|word2vec|hybrid|bm25)$", description="Search algorithm to use"),
+    algorithm: str = Query("vsm", regex="^(vsm|word2vec|hybrid|bm25|faiss)$", description="Search algorithm to use"),
     top_k: int = Query(5, ge=1, le=50, description="Number of top results to return"),
     dataset : str = Query(..., description="name of dataset"),
     with_index: bool = False

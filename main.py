@@ -5,6 +5,7 @@ from routes import word2vec_api
 from routes import inverted_index_api
 from routes import search_api
 from routes import bm25
+from routes import build_faiss_index_store
 from database import Base, engine
 from models.document import Document
 from fastapi.middleware.cors import CORSMiddleware
@@ -16,6 +17,9 @@ origins = [
     "http://127.0.0.1:5173",
     # Add your production domain if needed
 ]
+
+
+Base.metadata.create_all(bind=engine)
 
 app.add_middleware(
     CORSMiddleware,
@@ -32,6 +36,7 @@ app.include_router(word2vec_api.router)
 app.include_router(inverted_index_api.router)
 app.include_router(search_api.router)
 app.include_router(bm25.router)
+app.include_router(build_faiss_index_store.router)
 
 
 @app.get("/")

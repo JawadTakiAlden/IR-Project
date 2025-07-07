@@ -5,6 +5,7 @@ from sklearn.metrics.pairwise import cosine_similarity
 from gensim.models import Word2Vec
 from services.processor import TextProcessor
 from rank_bm25 import BM25Okapi
+import faiss
 
 class SearchService:
     def __init__(self):
@@ -21,6 +22,16 @@ class SearchService:
         except FileNotFoundError as e:
             raise ValueError(f"Missing TF-IDF joblib files for dataset '{dataset_name}'") from e
         return vectorizer, matrix, doc_ids, doc_texts
+
+    def load_faiss_assets(self, dataset_name: str):
+        base_path = "vector_store_faiss"
+        try:
+            index = faiss.read_index(os.path.join(base_path, f"{dataset_name}_faiss.index"))
+            doc_ids = joblib.load(os.path.join(base_path, f"{dataset_name}_doc_ids.joblib"))
+            doc_texts = joblib.load(os.path.join(base_path, f"{dataset_name}_doc_texts.joblib"))
+        except Exception as e:
+            raise ValueError(f"FAISS assets missing for dataset '{dataset_name}'") from e
+        return index, doc_ids, doc_texts
 
     def load_word2vec_assets(self, dataset_name: str):
         base_path = "vector_store_word2vec"
@@ -51,6 +62,49 @@ class SearchService:
 
         return bm25, doc_ids, doc_texts    
 
+    def search_faiss(self, query: str, dataset_name: str, top_k=5, with_index=False):
+        vectorizer, matrix, doc_ids_full, doc_texts_full = self.load_tfidf_assets(dataset_name)
+        index, faiss_doc_ids, faiss_doc_texts = self.load_faiss_assets(dataset_name)
+
+        tokens = self.processor.normalize(query)
+        query_vector = vectorizer.transform([" ".join(tokens)]).toarray().astype("float32")
+
+        if with_index:
+            inverted_index = self.load_inverted_index(dataset_name)
+            matched_ids = set()
+            for token in tokens:
+                matched_ids.update(inverted_index.get(token, []))
+
+            filtered_data = [(i, doc_id, text)
+                            for i, (doc_id, text) in enumerate(zip(doc_ids_full, doc_texts_full))
+                            if doc_id in matched_ids]
+
+            if not filtered_data:
+                return []
+
+            indices, filtered_ids, filtered_texts = zip(*filtered_data)
+            filtered_matrix = matrix[list(indices)].toarray().astype("float32")
+
+            # Build a new temporary FAISS index for filtered data
+            faiss_index = faiss.IndexFlatL2(filtered_matrix.shape[1])
+            faiss_index.add(filtered_matrix)
+            distances, neighbors = faiss_index.search(query_vector, top_k)
+
+            # Use the filtered IDs and texts
+            doc_ids, doc_texts = list(filtered_ids), list(filtered_texts)
+        else:
+            distances, neighbors = index.search(query_vector, top_k)
+            doc_ids, doc_texts = faiss_doc_ids, faiss_doc_texts
+
+        return [
+            {
+                "doc_id": doc_ids[neighbors[0][i]],
+                "text": doc_texts[neighbors[0][i]],
+                "distance": float(distances[0][i]),  # Distance not similarity
+                "score": float(1 / (1 + distances[0][i]))  # Optional similarity-like score
+            }
+            for i in range(len(neighbors[0]))
+        ]
     def search_bm25(self, query: str, dataset_name: str, top_k=5, with_index=False):
         bm25, doc_ids, doc_texts = self.load_bm25_assets(dataset_name)
         tokens = self.processor.normalize(query)
@@ -191,5 +245,7 @@ class SearchService:
             return self.search_hybrid(query, dataset_name, top_k, alpha=0.5, with_index=with_index)
         elif algorithm == "bm25":
             return self.search_bm25(query, dataset_name, top_k, with_index)
+        elif algorithm == "faiss":
+            return self.search_faiss(query, dataset_name, top_k, with_index)
         else:
             raise ValueError(f"Unknown algorithm: {algorithm}")
